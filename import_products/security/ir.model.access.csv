@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_import_products,import.products,model_import_products,base.group_user,1,1,1,1
+access_output_output,output.output,model_output_output,base.group_user,1,1,1,1
+import_products.access_import_bom,access_import_bom,import_products.model_import_bom,base.group_user,1,1,1,1
+access_vendor_category,access.vendor.category,model_vendor_category,base.group_user,1,1,1,1

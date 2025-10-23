@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- BOM Import Wizard Form View -->
+    <record id="view_import_bom_form" model="ir.ui.view">
+        <field name="name">import.bom.form</field>
+        <field name="model">import.bom</field>
+        <field name="arch" type="xml">
+            <form string="Import BOM">
+                <group>
+                    <field name="file_path"/>
+                    <field name="bom_type"/>
+                </group>
+                <footer>
+                    <button name="import_bom_data" type="object" string="Import BOM" class="btn-primary"/>
+                    <button string="Cancel" special="cancel" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action for BOM Import Wizard -->
+    <record id="action_import_bom" model="ir.actions.act_window">
+        <field name="name">Import BOM</field>
+        <field name="res_model">import.bom</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_import_bom_form"/>
+        <field name="target">new</field>
+    </record>
+
+    <!-- Menu under Import Products -->
+    <menuitem id="menu_sub_import_bom"
+              name="Import BOM"
+              parent="import_products.menu_import_products"
+              action="action_import_bom"
+              sequence="2"/>
+</odoo>
