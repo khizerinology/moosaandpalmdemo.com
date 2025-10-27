@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- inherit view add cost field in bom line -->
+    <record id="mrp_bom_form_view_inherited" model="ir.ui.view">
+        <field name="name">mrp.bom.form.view.inherited</field>
+        <field name="model">mrp.bom</field>
+        <field name="inherit_id" ref="mrp.mrp_bom_form_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="before">
+                <field name='state' invisible="1"/>
+                <header>
+                    <button name="action_approve_request" string="Approve Request" type="object" class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_approve" string="Approve" type="object" class="btn-primary" invisible="state in ['draft','approve','reject']" groups="wt_mrp_cost.group_bom_recipe_manager"/>
+                    <button name="action_reject" string="Reject" type="object" class="btn-danger" invisible="state != 'waiting_approval'" groups="wt_mrp_cost.group_bom_recipe_manager"/>
+                    <button name="action_change_request" string="Change Request" type="object" class="btn-danger" invisible="state in ['draft', 'waiting_approval']" groups="wt_mrp_cost.group_bom_recipe_user"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,waiting_approval,approve,reject"/>
+                </header>            
+            </xpath>
+
+            <xpath expr="//list/field[@name='product_qty']" position="after">
+                <field name="cost"/>
+            </xpath>
+            
+            <xpath expr="//field[@name='product_qty']/parent::div" position="after">
+                <field name="reject_reason" invisible="state != 'reject'"/>
+                <field name="responsible_id" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='bom_line_ids']" position="attributes">
+                <attribute name="readonly">state == 'approve'</attribute>
+            </xpath>
+            <xpath expr="//field[@name='operation_ids']" position="attributes">
+                <attribute name="readonly">state == 'approve'</attribute>
+            </xpath>
+            <xpath expr="//field[@name='product_tmpl_id']" position="attributes">
+                <attribute name="readonly">state == 'approve'</attribute>
+            </xpath>
+            <xpath expr="//field[@name='product_id']" position="attributes">
+                <attribute name="readonly">state == 'approve'</attribute>
+            </xpath>
+            <xpath expr="//field[@name='product_qty']" position="attributes">
+                <attribute name="readonly">state == 'approve'</attribute>
+            </xpath>
+            <xpath expr="//field[@name='company_id']" position="attributes">
+                <attribute name="readonly">state == 'approve'</attribute>
+            </xpath>
+            <xpath expr="//field[@name='type']" position="attributes">
+                <attribute name="readonly">state == 'approve'</attribute>
+            </xpath>
+            
+        </field>
+    </record>
+
+    <record id="mrp_bom_list_view_inherited" model="ir.ui.view">
+        <field name="name">mrp.bom.list.view.inherited</field>
+        <field name="model">mrp.bom</field>
+        <field name="inherit_id" ref="mrp.mrp_bom_tree_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='product_qty']" position="before">
+                <field name="state"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="mail_template_bom_approval" model="mail.template">
+            <field name="name">BOM Approval Request</field>
+            <field name="model_id" ref="mrp.model_mrp_bom"/>
+            <field name="email_from">{{ (object.company_id.email) }}</field>
+            <field name="subject">Approval Required: MRP BOM</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="font-size: 13px;">
+                        Please review and approve the following BOM request:
+                    </p>
+                    <ul><li><strong>User:</strong> <t t-out="object.env.user.name or ''"/></li>
+                        <li><strong>Product:</strong> <t t-out="object.product_tmpl_id.name or ''"/></li>
+                        <li><strong>Company:</strong> <t t-out="object.company_id.name or ''"/></li>
+                    </ul>
+                    <p>
+                        <t t-set="base_url" t-value="object.env['ir.config_parameter'].sudo().get_param('web.base.url')"/>
+                        <a t-attf-href="{{ base_url }}/web#id={{ object.id }}&amp;model=mrp.bom&amp;view_type=form"
+                           style="display:inline-block;padding:10px 16px;background-color:#1e87f0;color:white;text-decoration:none;border-radius:4px;">
+                           View Request
+                        </a>
+                    </p>
+                    <p>Thank you.</p>
+                </div>
+            </field>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+        <record id="mail_template_bom_req_approved" model="mail.template">
+            <field name="name">BOM Request Approval Notification</field>
+            <field name="model_id" ref="mrp.model_mrp_bom"/>
+            <field name="email_from">{{ (object.env.user.email or 'noreply@yourcompany.com') }}</field>
+            <field name="email_to">{{ (object.responsible_id.email or '') }}</field>
+            <field name="subject">Approved: BOM Request</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="font-size: 13px;">
+                        Your BOM request has been <strong>approved</strong>:
+                    </p>
+                    <ul>
+                        <li><strong>Approved By:</strong> <t t-out="object.env.user.name or ''"/></li>
+                        <li><strong>Product:</strong> <t t-out="object.product_tmpl_id.name or ''"/></li>
+                        <li><strong>Company:</strong> <t t-out="object.company_id.name or ''"/></li>
+                    </ul>
+                    <p>
+                        <t t-set="base_url" t-value="object.env['ir.config_parameter'].sudo().get_param('web.base.url')"/>
+                        <a t-attf-href="{{ base_url }}/web#id={{ object.id }}&amp;model=mrp.bom&amp;view_type=form"
+                           style="display:inline-block;padding:10px 16px;background-color:#28a745;color:white;text-decoration:none;border-radius:4px;">
+                           View Request
+                        </a>
+                    </p>
+                    <p>Thank you.</p>
+                </div>
+            </field>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+        <record id="mail_template_bom_request_reject" model="mail.template">
+            <field name="name">BOM Request Rejection</field>
+            <field name="model_id" ref="mrp.model_mrp_bom"/>
+            <field name="email_from">{{ (object.env.user.email or 'noreply@yourcompany.com') }}</field>
+            <field name="email_to">{{ (object.responsible_id.email or '') }}</field>
+            <field name="subject">Rejected: BOM Rejection</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        <p>Your BOM request has been <strong>rejected</strong>:</p>
+                        <ul>
+                            <li><strong>Product:</strong> <t t-out="object.product_tmpl_id.name or ''"/></li>
+                            <li><strong>Rejected By:</strong> <t t-out="object.env.user.name or ''"/></li>
+                            <li><strong>Reason for Rejection:</strong> <t t-out="object.reject_reason or 'No reason provided'"/></li>
+                            <li><strong>Company:</strong> <t t-out="object.company_id.name or ''"/></li>
+                        </ul>
+                        <p>
+                            <t t-set="base_url" t-value="object.env['ir.config_parameter'].sudo().get_param('web.base.url')"/>
+                            <a t-attf-href="{{ base_url }}/web#id={{ object.id }}&amp;model=mrp.bom&amp;view_type=form"
+                               style="display:inline-block;padding:10px 16px;background-color:#dc3545;color:white;text-decoration:none;border-radius:4px;">
+                               View Request
+                            </a>
+                        </p>
+                        <p>Thank you.</p>
+                    </p>
+                </div>  
+            </field>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+        <record id="mail_template_bom_change_request" model="mail.template">
+            <field name="name">BOM Change Request</field>
+            <field name="model_id" ref="mrp.model_mrp_bom"/>
+            <field name="email_from">{{ (object.responsible_id.email or 'noreply@yourcompany.com') }}</field>
+            <field name="subject">BOM : Change Request</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        <p>Bom Change Request.</p>
+                        <ul>
+                            <li><strong>Product:</strong> <t t-out="object.product_tmpl_id.name or ''"/></li>
+                            <li><strong>Change Request By:</strong> <t t-out="object.responsible_id.name or ''"/></li>
+                            <li><strong>Company:</strong> <t t-out="object.company_id.name or ''"/></li>
+                        </ul>
+                        <p>
+                            <t t-set="base_url" t-value="object.env['ir.config_parameter'].sudo().get_param('web.base.url')"/>
+                            <a t-attf-href="{{ base_url }}/web#id={{ object.id }}&amp;model=mrp.bom&amp;view_type=form"
+                               style="display:inline-block;padding:10px 16px;background-color:#dc3545;color:white;text-decoration:none;border-radius:4px;">
+                               View Request
+                            </a>
+                        </p>
+                        <p>Thank you.</p>
+                    </p>
+                </div>  
+            </field>
+            <field name="auto_delete" eval="True"/>
+        </record>
+    </data>
+</odoo>
