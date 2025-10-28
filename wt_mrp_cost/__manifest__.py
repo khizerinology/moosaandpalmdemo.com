@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name':'MRP customization',
-    'version':'18.0.0.1',
+    'version':'19.0',
     'summary':'MRP customization',
     'description':'add cost in to bill of materials.',
     'category':'Manufacturing/Bom',
