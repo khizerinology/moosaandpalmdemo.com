@@ -10,7 +10,7 @@ Import Products
 This module Import Products And Variants With Stock.
     """,
     "summary": """Import Products And Variants With Stock""",
-    "version": "18.0",
+    "version": "19.0",
     "price": 30.00,
     "currency": "USD",
     "support": "support@warlocktechnologies.com",
@@ -33,3 +33,4 @@ This module allows to Import Product and Variants with Qty.
     'installable': True,
     'auto_install': False,
 }
+
