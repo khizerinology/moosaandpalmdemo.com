@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2015-Present Webkul Software Pvt. Ltd. (<https://webkul.com/>) -->
+<!-- See LICENSE file for full copyright and licensing details. -->
+<!-- "License URL : <https://store.webkul.com/license.html/>" -->
+<odoo>
+	<data>
+		<record id="import_wizard_form" model="ir.ui.view">
+			<field name="name">import.operation.form</field>
+			<field name="model">import.operation</field>
+			<field name="inherit_id" ref="odoo_multi_channel_sale.import_wizard_form"/>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<xpath expr="//group[@name='filters']" postion="inside">
+					<group>
+						<field
+							name  ="salla_filter_type"
+							attrs ="{'invisible':[('channel','!=','salla')]}"
+							widget="radio"
+						/>
+					</group>
+					<group
+						attrs="{'invisible': ['|',('channel','!=','salla'),('salla_filter_type','!=','id')]}">
+						<field name="salla_object_id" attrs="{'required':[('channel','=','salla'),('salla_filter_type','=','id')]}"/>
+					</group>
+					<group
+						attrs="{'invisible': ['|','|',('channel','!=','salla'),('salla_filter_type','!=','date'),('object','!=','sale.order')]}">
+						<group col="1">
+							<field name="salla_from_date" attrs="{'required':[('channel','=','salla'),('salla_filter_type','=','date'),('object','=','sale.order')]}"/>
+						</group>
+						<group col="1">
+							<field name="salla_to_date" attrs="{'required':[('channel','=','salla'),('salla_filter_type','=','date'),('object','=','sale.order')]}"/>
+						</group>
+					</group>
+					<div class="row mt16 o_settings_container" attrs="{'invisible': ['|','|',('channel','!=','salla'),('salla_filter_type','!=','all'),('object','!=','product.template')]}">
+						<div class="col-xs-12 col-md-12 o_setting_box">
+							<div class="o_setting_left_pane"/>
+							<div class="o_setting_right_pane">
+								<label string="Keyword/Sku" for="salla_enable_keyword"/>
+								<field name="salla_enable_keyword"/>
+								<div>
+									<field 
+										name="salla_product_keyword" 
+										placeholder="keyword" 
+										string="Keyword" 
+										style="width:40%;" 
+										attrs="{'invisible': [('salla_enable_keyword','=',False)]}" 
+										help="Keyword can be name or sku of the product, or a part of it"
+									/>
+								</div>
+								<div class="text-muted" attrs="{'invisible': [('salla_enable_keyword','=',False)]}">
+									It will import all matching product with keyword in their Name or SKU
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row mt16 o_settings_container" attrs="{'invisible': ['|','|',('channel','!=','salla'),('salla_filter_type','!=','all'),('object','!=','sale.order')]}">
+						<div class="col-xs-12 col-md-12 o_setting_box">
+							<div class="o_setting_left_pane"/>
+							<div class="o_setting_right_pane">
+								<label string="Order Status" for="salla_order_status"/>
+								<field 
+									name="salla_order_status" 
+									style="width:30%%"
+								/>
+								<div class="text-muted">
+									Import all orders with selected status, it will import all if nothing is selected
+								</div>
+							</div>
+						</div>
+					</div>
+				</xpath>
+
+				<xpath expr="//form" postion="inside">
+					<div attrs = "{'invisible':['|',('channel','!=','salla'),('object','=','delivery.carrier')]}">
+						<span class='bg-warning text-dark' attrs="{'invisible': ['|',('channel','!=','salla'),('salla_filter_type','!=','all')]}">
+							Note: It will import all the objects from salla store.
+						</span>
+						<span class='bg-warning text-dark' attrs="{'invisible': ['|',('channel','!=','salla'),('salla_filter_type','!=','id')]}">
+							Note: It will import object of particular 'ID' entered.
+						</span>
+					</div>
+					<span class='bg-warning text-dark' attrs="{'invisible': ['|',('channel','!=','salla'),('object','!=','delivery.carrier')]}">
+						It will import shipping companies from salla store
+					</span>
+					<div class='bg-warning text-dark' attrs = "{'invisible':[('channel','!=','salla')]}">
+						<span attrs = "{'invisible':['|',('salla_filter_type','!=','date'),('object','=','sale.order')]}">
+							Note: It will import all objects, Date format is not supported for this object
+						</span>
+					</div>
+				</xpath>
+			</field>
+		</record>
+
+		<record id="open_import_wizard_action" model="ir.actions.act_window">
+			<field name="name">Import Wizard</field>
+			<field name="res_model">import.operation</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+	</data>
+</odoo>
