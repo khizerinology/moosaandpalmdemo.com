@@ -2,6 +2,17 @@ import requests
 import logging
 from odoo import fields, models, exceptions, api
 _logger = logging.getLogger(__name__)
+
+
+class ResPartner(models.Model):
+    _inherit = 'res.partner'
+
+    # If the field doesn't exist (or you want to override attributes)
+    mobile = fields.Char(
+        string='Mobile Number',
+        help='Enter the partner’s mobile number',
+    )
+    
 class TecfySaleOrder(models.Model):
     _inherit = "sale.order"
 
