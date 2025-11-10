@@ -12,6 +12,14 @@ class ResPartner(models.Model):
         string='Mobile Number',
         help='Enter the partner’s mobile number',
     )
+
+class SaleOrderLine(models.Model):
+    _inherit = 'sale.order.line'
+
+    # If the field doesn't exist (or you want to override attributes)
+    tax_id = fields.Many2one('account.tax',
+        string='Tax ID'
+    )
     
 class TecfySaleOrder(models.Model):
     _inherit = "sale.order"
