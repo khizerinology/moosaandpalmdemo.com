@@ -12,7 +12,7 @@
     ],
     "website": "https://tecfy.co",
     "license": "Other OSI approved licence",
-    "depends": ["stock", "sale_management","odoo_salla_inventory_app"],
+    "depends": ["contact","stock", "sale_management","odoo_salla_inventory_app"],
     "external_dependencies": {"python": [], "bin": []},
     "data": ['views/company_view.xml', 'views/sale_order_view.xml','views/activity.xml','security/ir.model.access.csv'],
     "demo": [],
