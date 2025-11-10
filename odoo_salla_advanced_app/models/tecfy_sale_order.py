@@ -142,7 +142,7 @@ class TecfySaleOrder(models.Model):
     
     @api.model
     def create(self,values):
-        values['tecfy_salla_update'] = False # must activate it on update only
+        # values['tecfy_salla_update'] = False # must activate it on update only
         res = super(TecfySaleOrder, self).create(values)
         return res
 
