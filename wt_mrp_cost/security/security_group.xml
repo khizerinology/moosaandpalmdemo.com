@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        
+        <!-- Create new module category -->
+        <record id="base.module_category_manufacturing_bom" model="ir.module.category">
+            <field name="name">BOM Recipe Approval</field>
+            <field name="sequence">10</field>
+            <field name="description">Access for users and managers involved in BoM recipe approvals.</field>
+        </record>
+
+        <!-- Group: BoM Recipe User -->
+        <record id="group_bom_recipe_user" model="res.groups">
+            <field name="name">BoM Recipe User</field>
+            <field name="category_id" ref="base.module_category_manufacturing_bom"/>
+        </record>
+
+        <!-- Group: BoM Recipe Manager -->
+        <record id="group_bom_recipe_manager" model="res.groups">
+            <field name="name">BoM Recipe Manager</field>
+            <field name="category_id" ref="base.module_category_manufacturing_bom"/>
+            <field name="implied_ids" eval="[(4, ref('wt_mrp_cost.group_bom_recipe_user'))]"/>
+        </record>
+    </data>
+</odoo>

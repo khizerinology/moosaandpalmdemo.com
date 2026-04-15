@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-inherit="mrp.BomOverviewLine" t-inherit-mode="extension">
+        <xpath expr="//td[@t-if='showCosts' and contains(@t-attf-class, 'text-end')]" position="after">
+            <td t-if="showCosts" class="text-end">
+                <t t-if="data.cost">
+                    <t t-esc="formatMonetary(data.cost)"/>
+                </t>
+            </td>
+        </xpath>
+    </t>
+
+</templates>

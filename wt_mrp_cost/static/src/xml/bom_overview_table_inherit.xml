@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-inherit="mrp.BomOverviewTable" t-inherit-mode="extension">
+        <xpath expr="//thead/tr/th[8]" position="after">
+            <th t-if="showCosts" class="text-end">Cost</th>
+        </xpath>
+
+        <xpath expr="//tfoot/tr[1]/td[9]" position="after">
+            <td class="text-end" t-esc="formatMonetary(data.cost / data.quantity)"/>
+        </xpath>
+
+        <xpath expr="//tfoot/t[1]/tr[1]/td[9]" position="after">
+            <td class="text-end" t-esc="formatMonetary(byproduct.cost / byproduct.quantity)"/>
+        </xpath>
+    </t>
+</templates>
+    
